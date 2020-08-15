@@ -4,6 +4,7 @@ var loadingInterval = null;
 var loaded = false;
 var loadingIntervalFrequency = null;
 var loadedIntervalFrequency = null;
+var ignoreInputs = null;
 
 chrome.runtime.sendMessage({}, function() {
 	if (name === null || deadname === null) {
@@ -75,7 +76,10 @@ function replaceName(old: string, replacement: string) {
 			if (child.nodeType === 3) {
 				const text = child.nodeValue;
 				const newText = text.replace(dead, replacement);
-
+				if (ignoreInputs && child.tagName == 'INPUT'){
+					continue
+				}
+				
 				if (newText !== text) {
 					element.replaceChild(document.createTextNode(newText), child);
 				}

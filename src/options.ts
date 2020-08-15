@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
             last: ''
         },
 		loadingInterval: 50,
-		loadedInterval: 1000
+		loadedInterval: 1000,
+        ignoreInputs: true,
     }, function(items) {
 
         (<HTMLInputElement>document.getElementById('txtFirstName')).value = items.name.first;
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         (<HTMLInputElement>document.getElementById('txtUpdateLoading')).value = items.loadingInterval;
         (<HTMLInputElement>document.getElementById('txtUpdateLoaded')).value = items.loadedInterval;
+        (<HTMLInputElement>document.getElementById('inputsIgnored')).value = items.ignoreInputs;
     });
 });
 
@@ -50,7 +52,7 @@ document.getElementById('btnSave').addEventListener('click', function() {
 
     let loadingInterval = parseInt((<HTMLInputElement>document.getElementById('txtUpdateLoading')).value);
     let loadedInterval = parseInt((<HTMLInputElement>document.getElementById('txtUpdateLoaded')).value);
-    
+    let ignoreInputs = 'true' == (<HTMLInputElement>document.getElementById('inputsIgnored')).value);
     if (isNaN(loadingInterval) || isNaN(loadedInterval)) {
         alert('Frequencies must be numbers in milliseconds');
         return;
@@ -60,7 +62,8 @@ document.getElementById('btnSave').addEventListener('click', function() {
         name: name,
         deadname: deadname,
 		loadingInterval: loadingInterval,
-		loadedInterval: loadedInterval
+		loadedInterval: loadedInterval,
+        ignoreInputs: ignoreInputs
     }, function() {
         alert('Saved. You may need to refresh already open pages.');
         document.getElementById('deadnames').classList.add('hide');
